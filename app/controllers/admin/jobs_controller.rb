@@ -29,7 +29,7 @@ class Admin::JobsController < ApplicationController
     redirect_to admin_jobs_path
   else
     render :edit
-   end 
+   end
   end
 
   def show
@@ -45,6 +45,6 @@ class Admin::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:title, :description, :wage_lower_bound, :wage_upper_bound, :contact_email)
+    params.require(:job).permit(:title, :description, :wage_lower_bound, :wage_upper_bound, :contact_email, :is_hidden)
   end
 end
