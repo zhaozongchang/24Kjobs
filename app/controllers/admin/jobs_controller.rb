@@ -1,4 +1,7 @@
 class Admin::JobsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :admin_required
+  
   def index
     @jobs = Job.all
   end
@@ -37,5 +40,5 @@ class Admin::JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:title, :description)
-  end 
+  end
 end
