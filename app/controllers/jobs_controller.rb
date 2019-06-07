@@ -1,8 +1,16 @@
 class JobsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :update, :edit, :destroy]
   def index
-    @jobs = Job.where(:is_hidden => false).paixu
+    @jobs = case params[:order]
+            when 'by_lower_bound'
+              Job.where(is_hidden: false).order('wage_lower_bound DESC')
+            when 'by_upper_bound'
+              Job.where(is_hidden: false).order('wage_upper_bound DESC')
+            else
+              Job.where(is_hidden: false).paixu
+            end
   end
+
 
   def new
     @job = Job.new
@@ -35,7 +43,7 @@ class JobsController < ApplicationController
     if @job.is_hidden
       flash[:warning] = "职缺已满"
       redirect_to root_path
-    end 
+    end
   end
 
   def destroy
