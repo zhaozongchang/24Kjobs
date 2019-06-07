@@ -1,7 +1,7 @@
 class Admin::JobsController < ApplicationController
   before_action :authenticate_user!
   before_action :admin_required
-  
+
   def index
     @jobs = Job.all
   end
@@ -12,8 +12,11 @@ class Admin::JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    @job.save
+    if @job.save
     redirect_to admin_jobs_path
+  else
+    render :new
+   end
   end
 
   def edit
@@ -22,8 +25,11 @@ class Admin::JobsController < ApplicationController
 
   def update
     @job = Job.find(params[:id])
-    @job.update(job_params)
+    if @job.update(job_params)
     redirect_to admin_jobs_path
+  else
+    render :edit
+   end 
   end
 
   def show
@@ -39,6 +45,6 @@ class Admin::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:title, :description)
+    params.require(:job).permit(:title, :description, :wage_lower_bound, :wage_upper_bound, :contact_email)
   end
 end
