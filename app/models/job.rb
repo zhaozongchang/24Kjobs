@@ -7,6 +7,8 @@ class Job < ApplicationRecord
 
   scope :paixu, -> {order('created_at DESC')}
 
+  has_many :resumes
+
   def publish!
     self.is_hidden = false
     self.save
@@ -15,5 +17,5 @@ class Job < ApplicationRecord
   def hide!
     self.is_hidden = true
     self.save
-  end 
+  end
 end
